@@ -1,31 +1,66 @@
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.*
+import androidx.compose.runtime.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.jetbrains.compose.web.css.Style
+import org.jetbrains.compose.web.dom.Div
+import org.jetbrains.compose.web.dom.H1
+import org.jetbrains.compose.web.dom.Img
+import org.jetbrains.compose.web.dom.Text
 import org.jetbrains.compose.web.renderComposable
 
 fun main() {
-    var count: Int by mutableStateOf(0)
-
     renderComposable(rootElementId = "root") {
-        Div({ style { padding(25.px) } }) {
-            Button(attrs = {
-                onClick { count -= 1 }
-            }) {
-                Text("-")
-            }
+        val coroutineScope = rememberCoroutineScope()
+        var data by mutableStateOf<InstanceData?>(null)
 
-            Span({ style { padding(15.px) } }) {
-                Text("$count")
+        SideEffect {
+            coroutineScope.launch {
+                withContext(Dispatchers.Default) {
+                    data = Api.getInstanceData()
+                }
             }
+        }
 
-            Button(attrs = {
-                onClick { count += 1 }
-            }) {
-                Text("+")
+        Style(AppStylesheet)
+        Layout {
+            MainContentLayout {
+                Img(src = "banner.png",
+                    alt = "banner",
+                    attrs = { classes(AppStylesheet.banner) }
+                )
+                H1(
+                    attrs = { classes(AppStylesheet.title) }
+                ) {
+                    Text("paquita.masto.host")
+                }
+                CardContainer {
+                    Card {
+                        Div(
+                            attrs = { classes(AppStylesheet.cardDataTitle) }
+                        ) {
+                            Text("Users:")
+                        }
+                        Div(
+                            attrs = { classes(AppStylesheet.cardData) }
+                        ) {
+                            Text(data?.stats?.userCount?.toString() ?: "...")
+                        }
+                    }
+                    Card {
+                        Div(
+                            attrs = { classes(AppStylesheet.cardDataTitle) }
+                        ) {
+                            Text("Toots:")
+                        }
+                        Div(
+                            attrs = { classes(AppStylesheet.cardData) }
+                        ) {
+                            Text(data?.stats?.statusCount?.toString() ?: "...")
+                        }
+                    }
+                }
             }
         }
     }
 }
-
