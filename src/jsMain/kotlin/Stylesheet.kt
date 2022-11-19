@@ -10,6 +10,24 @@ object AppStylesheet : StyleSheet() {
         }
     }
 
+    val main by style {
+        backgroundColor(Color("#282C37"))
+        width(590.px)
+        property("margin", "0 auto")
+        padding(20.px)
+    }
+    val cardContainer by style {
+        backgroundColor(Color.transparent)
+        marginTop(20.px)
+        display(DisplayStyle.Grid)
+        gridTemplateColumns("1fr 1fr")
+        gap(60.px)
+    }
+    val card by style {
+        backgroundColor(Color("#313543"))
+        padding(20.px)
+    }
+
     val banner by style {
         width(100.percent)
     }

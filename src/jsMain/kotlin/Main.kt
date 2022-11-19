@@ -23,41 +23,39 @@ fun main() {
         }
 
         Style(AppStylesheet)
-        Layout {
-            MainContentLayout {
-                Img(src = "banner.png",
-                    alt = "banner",
-                    attrs = { classes(AppStylesheet.banner) }
-                )
-                H1(
-                    attrs = { classes(AppStylesheet.title) }
-                ) {
-                    Text("paquita.masto.host")
-                }
-                CardContainer {
-                    Card {
-                        Div(
-                            attrs = { classes(AppStylesheet.cardDataTitle) }
-                        ) {
-                            Text("Users:")
-                        }
-                        Div(
-                            attrs = { classes(AppStylesheet.cardData) }
-                        ) {
-                            Text(data?.stats?.userCount?.toString() ?: "...")
-                        }
+        MainContentLayout {
+            Img(src = "banner.png",
+                alt = "banner",
+                attrs = { classes(AppStylesheet.banner) }
+            )
+            H1(
+                attrs = { classes(AppStylesheet.title) }
+            ) {
+                Text("paquita.masto.host")
+            }
+            CardContainer {
+                Card {
+                    Div(
+                        attrs = { classes(AppStylesheet.cardDataTitle) }
+                    ) {
+                        Text("Users:")
                     }
-                    Card {
-                        Div(
-                            attrs = { classes(AppStylesheet.cardDataTitle) }
-                        ) {
-                            Text("Toots:")
-                        }
-                        Div(
-                            attrs = { classes(AppStylesheet.cardData) }
-                        ) {
-                            Text(data?.stats?.statusCount?.toString() ?: "...")
-                        }
+                    Div(
+                        attrs = { classes(AppStylesheet.cardData) }
+                    ) {
+                        Text(data?.stats?.userCount?.toString() ?: "...")
+                    }
+                }
+                Card {
+                    Div(
+                        attrs = { classes(AppStylesheet.cardDataTitle) }
+                    ) {
+                        Text("Toots:")
+                    }
+                    Div(
+                        attrs = { classes(AppStylesheet.cardData) }
+                    ) {
+                        Text(data?.stats?.statusCount?.toString() ?: "...")
                     }
                 }
             }
