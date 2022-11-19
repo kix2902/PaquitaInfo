@@ -12,9 +12,15 @@ object AppStylesheet : StyleSheet() {
 
     val main by style {
         backgroundColor(Color("#282C37"))
-        width(590.px)
+        width(600.px)
         property("margin", "0 auto")
         padding(20.px)
+
+        media(mediaMaxWidth(640.px)) {
+            self style {
+                width(100.percent)
+            }
+        }
     }
     val cardContainer by style {
         backgroundColor(Color.transparent)
@@ -22,6 +28,12 @@ object AppStylesheet : StyleSheet() {
         display(DisplayStyle.Grid)
         gridTemplateColumns("1fr 1fr")
         gap(60.px)
+
+        media(mediaMaxWidth(640.px)) {
+            self style {
+                gap(10.vw)
+            }
+        }
     }
     val card by style {
         backgroundColor(Color("#313543"))
